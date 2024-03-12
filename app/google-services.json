@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "494836134326",
+    "project_id": "iefjt-c2ee7",
+    "storage_bucket": "iefjt-c2ee7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494836134326:android:c5c88aefc5219049565117",
+        "android_client_info": {
+          "package_name": "com.iefjt.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLyesFIH-toVHEVDD0pOGXAGfI10k-mnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brands_title">Marcas</string>
+    <string name="brands_add_brand">Agregar marca</string>
+    <string name="brands_add_name">Nombre de la marca:</string>
+    <string name="brands_add_image_url">URL de la imagen de la marca:</string>
+
+    <string name="headquarters_title">Sedes</string>
+    <string name="headquarters_add_headquarters">Agregar sede</string>
+    <string name="headquarters_add_name">Nombre de la sede:</string>
+
+    <string name="statuses_title">Estados</string>
+    <string name="statuses_add_status">Agregar estado</string>
+    <string name="statuses_add_name">Nombre del estado:</string>
+    <string name="statuses_add_color">Color (hexadecimal) del estado:</string>
+
+    <string name="types_title">Tipos</string>
+    <string name="types_add_type">Agregar tipo</string>
+    <string name="types_add_name">Nombre de el tipo:</string>
+    <string name="types_add_image_url">URL de la imagen de el tipo:</string>
+
+    <string name="element_name">Nombre:</string>
+    <string name="element_headquarters">Sede:</string>
+    <string name="element_serial">Serial:</string>
+    <string name="element_brand">Marca:</string>
+    <string name="element_status">Estado:</string>
+    <string name="element_type">Tipo:</string>
+
+    <string name="element_details_title">Detalles del elemento</string>
+
+    <string name="element_add_title">Agregar elemento:</string>
+    <string name="element_add_select">Seleccionar:</string>
+    <string name="element_add_amount">Cantidad:</string>
+    <string name="element_add_save">Guardar</string>
+
+    <string name="elements_title">Elementos del inventario</string>
+
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="network_error">Error de red. Inténtelo de nuevo más tarde.</string>
+    <string name="unknown_error">Error desconocido.</string>
+</resources>

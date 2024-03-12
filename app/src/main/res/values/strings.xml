@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name" translatable="false">IEFJT</string>
+
+    <string name="brands_title">Brands</string>
+    <string name="brands_add_brand">Add brand</string>
+    <string name="brands_add_name">Brand name:</string>
+    <string name="brands_add_image_url">Brand image URL:</string>
+
+    <string name="headquarters_title">Headquarters</string>
+    <string name="headquarters_add_headquarters">Add headquarters</string>
+    <string name="headquarters_add_name">Headquarters name:</string>
+
+    <string name="statuses_title">Statuses</string>
+    <string name="statuses_add_status">Add status</string>
+    <string name="statuses_add_name">Status name:</string>
+    <string name="statuses_add_color">Status color (hexadecimal):</string>
+
+    <string name="types_title">Types</string>
+    <string name="types_add_type">Add type</string>
+    <string name="types_add_name">Type name:</string>
+    <string name="types_add_image_url">Type image URL:</string>
+
+    <string name="element_name">Name:</string>
+    <string name="element_headquarters">Headquarters:</string>
+    <string name="element_serial">Serial:</string>
+    <string name="element_brand">Brand:</string>
+    <string name="element_status">Status:</string>
+    <string name="element_type">Type:</string>
+
+    <string name="element_details_title">Element details</string>
+
+    <string name="element_add_title">Add element:</string>
+    <string name="element_add_select">Select:</string>
+    <string name="element_add_amount">Amount:</string>
+    <string name="element_add_save">Save</string>
+
+    <string name="elements_title">Inventory items</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="network_error">Network error. Try again later.</string>
+    <string name="unknown_error">Unknown error.</string>
+</resources>
