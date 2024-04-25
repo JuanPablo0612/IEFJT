@@ -10,12 +10,16 @@ import javax.inject.Inject
 class HeadquartersRepository @Inject constructor(private val remoteDataSource: HeadquartersRemoteDataSource) {
     val allHeadquarters = remoteDataSource.getAll().map { it.map { model -> model.toDomain() } }
 
-    fun getById(headquartersId: String) = remoteDataSource.getById(headquartersId).map { model -> model!!.toDomain() }
+    suspend fun getById(headquartersId: String): Headquarters {
+        return remoteDataSource.getById(headquartersId).toDomain()
+    }
 
     suspend fun add(headquarters: Headquarters) {
         val model = headquarters.toModel()
         remoteDataSource.add(model)
     }
 
-    suspend fun delete(headquartersId: String) = remoteDataSource.delete(headquartersId)
+    suspend fun delete(headquartersId: String) {
+        remoteDataSource.delete(headquartersId)
+    }
 }

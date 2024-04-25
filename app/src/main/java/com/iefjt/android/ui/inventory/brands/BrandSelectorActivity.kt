@@ -1,6 +1,5 @@
 package com.iefjt.android.ui.inventory.brands
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,11 +19,11 @@ class BrandSelectorActivity : ComponentActivity() {
                             putExtra("brandId", brandId)
                         }
 
-                        setResult(Activity.RESULT_OK, intent)
+                        setResult(RESULT_OK, intent)
                         finish()
                     },
                     onCancel = {
-                        setResult(Activity.RESULT_CANCELED)
+                        setResult(RESULT_CANCELED)
                         finish()
                     }
                 )

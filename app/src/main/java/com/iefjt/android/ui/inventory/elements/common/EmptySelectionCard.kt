@@ -1,4 +1,4 @@
-package com.iefjt.android.ui.inventory.elements.add
+package com.iefjt.android.ui.inventory.elements.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

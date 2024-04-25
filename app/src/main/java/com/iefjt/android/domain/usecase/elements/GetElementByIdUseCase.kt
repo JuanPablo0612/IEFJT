@@ -18,29 +18,24 @@ class GetElementByIdUseCase @Inject constructor(
     private val getStatusByIdUseCase: GetStatusByIdUseCase,
     private val getTypeByIdUseCase: GetTypeByIdUseCase
 ) {
-    operator fun invoke(elementId: String) = callbackFlow {
-        elementsRepository.getById(elementId).collect { element ->
-            combine(
-                getBrandByIdUseCase(element.brandId),
-                getHeadquartersByIdUseCase(element.headquartersId),
-                getStatusByIdUseCase(element.statusId),
-                getTypeByIdUseCase(element.typeId)
-            ) { brand, headquarters, status, type ->
-                ElementWithAllData(
-                    id = element.id,
-                    name = element.name,
-                    type = type,
-                    brand = brand,
-                    serial = element.serial,
-                    status = status,
-                    headquarters = headquarters,
-                    observations = element.observations
-                )
-            }.collect {
-                trySend(it)
-            }
-        }
+    suspend operator fun invoke(elementId: String): ElementWithAllData {
+        val element = elementsRepository.getById(elementId)
+        val brand = getBrandByIdUseCase(element.brandId)
+        val headquarters = getHeadquartersByIdUseCase(element.headquartersId)
+        val status = getStatusByIdUseCase(element.statusId)
+        val type = getTypeByIdUseCase(element.typeId)
 
-        awaitClose()
+        val elementWithAllData = ElementWithAllData(
+            id = element.id,
+            name = element.name,
+            type = type,
+            brand = brand,
+            serial = element.serial,
+            status = status,
+            headquarters = headquarters,
+            observations = element.observations
+        )
+
+        return elementWithAllData
     }
 }

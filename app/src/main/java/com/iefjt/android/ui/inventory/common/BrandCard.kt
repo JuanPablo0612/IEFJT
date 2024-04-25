@@ -1,4 +1,4 @@
-package com.iefjt.android.ui.inventory.brands
+package com.iefjt.android.ui.inventory.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,8 +21,13 @@ import coil.compose.AsyncImage
 import com.iefjt.android.domain.model.Brand
 
 @Composable
-fun BrandCard(brand: Brand, onClick: () -> Unit, onDelete: () -> Unit) {
-    Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+fun BrandCard(
+    brand: Brand,
+    allowActions: Boolean = false,
+    onClick: (brandId: String) -> Unit = {},
+    onDelete: (brandId: String) -> Unit = {}
+) {
+    Card(onClick = { onClick(brand.id) }, modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(10.dp)) {
             AsyncImage(
                 model = brand.imageUrl,
@@ -36,10 +41,15 @@ fun BrandCard(brand: Brand, onClick: () -> Unit, onDelete: () -> Unit) {
 
             Text(text = brand.name, style = MaterialTheme.typography.bodyLarge)
 
-            Spacer(modifier = Modifier.height(5.dp))
+            if (allowActions) {
+                Spacer(modifier = Modifier.height(5.dp))
 
-            IconButton(onClick = onDelete, modifier = Modifier.align(Alignment.End)) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                IconButton(
+                    onClick = { onDelete(brand.id) },
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                }
             }
         }
     }

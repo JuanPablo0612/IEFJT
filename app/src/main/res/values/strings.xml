@@ -35,6 +35,13 @@
     <string name="element_add_save">Save</string>
 
     <string name="elements_title">Inventory items</string>
+    <string name="elements_empty">Inventory is empty.</string>
+    <string name="elements_filter">Filter by:</string>
+    <string name="elements_filter_all">Filter by all</string>
+    <string name="elements_filter_brand">Filter by brand</string>
+    <string name="elements_filter_type">Filter by type</string>
+    <string name="elements_filter_headquarters">Filter by headquarters</string>
+    <string name="elements_filter_status">Filter by status</string>
 
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>

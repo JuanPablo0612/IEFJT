@@ -10,12 +10,16 @@ import javax.inject.Inject
 class StatusesRepository @Inject constructor(private val remoteDataSource: StatusesRemoteDataSource) {
     val allStatuses = remoteDataSource.getAll().map { it.map { model -> model.toDomain() } }
 
-    fun getById(statusId: String) = remoteDataSource.getById(statusId).map { model -> model!!.toDomain() }
+    suspend fun getById(statusId: String): Status {
+        return remoteDataSource.getById(statusId).toDomain()
+    }
 
     suspend fun add(status: Status) {
         val model = status.toModel()
         remoteDataSource.add(model)
     }
 
-    suspend fun delete(statusId: String) = remoteDataSource.delete(statusId)
+    suspend fun delete(statusId: String) {
+        remoteDataSource.delete(statusId)
+    }
 }

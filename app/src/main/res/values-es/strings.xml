@@ -34,8 +34,15 @@
     <string name="element_add_save">Guardar</string>
 
     <string name="elements_title">Elementos del inventario</string>
+    <string name="elements_empty">El inventario está vacío.</string>
+    <string name="elements_filter">Filtrar por:</string>
+    <string name="elements_filter_all">Filtrar por todos</string>
+    <string name="elements_filter_brand">Filtrar por marca</string>
+    <string name="elements_filter_type">Filtrar por tipo</string>
+    <string name="elements_filter_headquarters">Filtrar por sede</string>
+    <string name="elements_filter_status">Filtrar por:</string>
 
-    <string name="confirm">Confirmar</string>
+    zz<string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
     <string name="network_error">Error de red. Inténtelo de nuevo más tarde.</string>
     <string name="unknown_error">Error desconocido.</string>

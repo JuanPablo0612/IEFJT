@@ -33,7 +33,7 @@ class BrandsViewModel @Inject constructor(
         uiState = uiState.copy(showAddBrandDialog = !uiState.showAddBrandDialog)
     }
 
-    fun resetAddBrandDialog() {
+    private fun resetAddBrandDialog() {
         uiState = uiState.copy(
             errorMessageId = null,
             showAddBrandDialog = false,

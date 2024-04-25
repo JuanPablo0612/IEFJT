@@ -10,17 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.iefjt.android.R
-import com.iefjt.android.domain.model.Brand
+import com.iefjt.android.domain.model.Type
 
 @Composable
-fun ElementBrandCard(brand: Brand) {
+fun ElementType(type: Type) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         AsyncImage(
-            model = brand.imageUrl,
+            model = type.imageUrl,
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -30,6 +28,6 @@ fun ElementBrandCard(brand: Brand) {
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        Text(text = brand.name, style = MaterialTheme.typography.bodyLarge)
+        Text(text = type.name, style = MaterialTheme.typography.bodyLarge)
     }
 }

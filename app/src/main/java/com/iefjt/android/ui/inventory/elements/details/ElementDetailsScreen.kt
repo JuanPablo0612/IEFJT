@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.iefjt.android.R
+import com.iefjt.android.ui.common.CircularLoading
 import com.iefjt.android.ui.common.ScaffoldContent
-import com.iefjt.android.ui.inventory.elements.common.ElementBrandCard
-import com.iefjt.android.ui.inventory.elements.common.ElementStatusCard
-import com.iefjt.android.ui.inventory.elements.common.ElementTypeCard
+import com.iefjt.android.ui.inventory.elements.common.ElementBrand
+import com.iefjt.android.ui.inventory.elements.common.ElementStatus
+import com.iefjt.android.ui.inventory.elements.common.ElementType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +45,10 @@ fun ElementDetailsScreen(
 
     LaunchedEffect(key1 = elementId) {
         viewModel.init(elementId)
+    }
+
+    if (uiState.deleted) {
+        navController.navigateUp()
     }
 
     Scaffold(
@@ -67,93 +72,100 @@ fun ElementDetailsScreen(
         }
     ) { padding ->
         ScaffoldContent(padding = padding) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(10.dp)
-            ) {
-                if (uiState.element != null) {
-                    Text(
-                        text = stringResource(id = R.string.element_name),
-                        style = MaterialTheme.typography.labelLarge
-                    )
+            if (uiState.loading) {
+                CircularLoading()
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(10.dp)
+                ) {
+                    if (uiState.element != null) {
+                        Text(
+                            text = stringResource(id = R.string.element_name),
+                            style = MaterialTheme.typography.labelLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
 
-                    Text(text = uiState.element.name, style = MaterialTheme.typography.titleLarge)
+                        Text(
+                            text = uiState.element.name,
+                            style = MaterialTheme.typography.titleLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
-                        text = stringResource(id = R.string.element_serial),
-                        style = MaterialTheme.typography.labelLarge
-                    )
+                        Text(
+                            text = stringResource(id = R.string.element_serial),
+                            style = MaterialTheme.typography.labelLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
 
-                    Text(
-                        text = uiState.element.serial,
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                        Text(
+                            text = uiState.element.serial,
+                            style = MaterialTheme.typography.titleLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
-                        text = stringResource(id = R.string.element_headquarters),
-                        style = MaterialTheme.typography.labelLarge
-                    )
+                        Text(
+                            text = stringResource(id = R.string.element_headquarters),
+                            style = MaterialTheme.typography.labelLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
 
-                    Text(
-                        text = uiState.element.headquarters.name,
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                        Text(
+                            text = uiState.element.headquarters.name,
+                            style = MaterialTheme.typography.titleLarge
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        item {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(
-                                    text = stringResource(id = R.string.element_brand),
-                                    style = MaterialTheme.typography.labelLarge
-                                )
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            item {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        text = stringResource(id = R.string.element_brand),
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
 
-                                Spacer(modifier = Modifier.height(5.dp))
+                                    Spacer(modifier = Modifier.height(5.dp))
 
-                                ElementBrandCard(brand = uiState.element.brand)
+                                    ElementBrand(brand = uiState.element.brand)
+                                }
                             }
-                        }
 
-                        item {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(
-                                    text = stringResource(id = R.string.element_type),
-                                    style = MaterialTheme.typography.labelLarge
-                                )
+                            item {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        text = stringResource(id = R.string.element_type),
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
 
-                                Spacer(modifier = Modifier.height(5.dp))
+                                    Spacer(modifier = Modifier.height(5.dp))
 
-                                ElementTypeCard(type = uiState.element.type)
+                                    ElementType(type = uiState.element.type)
+                                }
                             }
-                        }
 
-                        item {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(
-                                    text = stringResource(id = R.string.element_status),
-                                    style = MaterialTheme.typography.labelLarge
-                                )
+                            item {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        text = stringResource(id = R.string.element_status),
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
 
-                                Spacer(modifier = Modifier.height(5.dp))
+                                    Spacer(modifier = Modifier.height(5.dp))
 
-                                ElementStatusCard(status = uiState.element.status)
+                                    ElementStatus(status = uiState.element.status)
+                                }
                             }
                         }
                     }

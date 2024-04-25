@@ -1,9 +1,5 @@
 package com.iefjt.android.ui.inventory.elements.add
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,13 +35,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.ScaffoldContent
-import com.iefjt.android.ui.inventory.brands.BrandSelectorActivity
-import com.iefjt.android.ui.inventory.elements.common.ElementBrandCard
-import com.iefjt.android.ui.inventory.elements.common.ElementStatusCard
-import com.iefjt.android.ui.inventory.elements.common.ElementTypeCard
-import com.iefjt.android.ui.inventory.headquarters.HeadquartersSelectorActivity
-import com.iefjt.android.ui.inventory.statuses.StatusSelectorActivity
-import com.iefjt.android.ui.inventory.type.TypeSelectorActivity
+import com.iefjt.android.ui.inventory.common.BrandCard
+import com.iefjt.android.ui.inventory.elements.common.ElementBrand
+import com.iefjt.android.ui.inventory.elements.common.ElementStatus
+import com.iefjt.android.ui.inventory.elements.common.ElementType
+import com.iefjt.android.ui.inventory.elements.common.EmptySelectionCard
+import com.iefjt.android.ui.inventory.elements.common.brandSelectorIntent
+import com.iefjt.android.ui.inventory.elements.common.brandSelectorLauncher
+import com.iefjt.android.ui.inventory.elements.common.headquartersSelectorIntent
+import com.iefjt.android.ui.inventory.elements.common.headquartersSelectorLauncher
+import com.iefjt.android.ui.inventory.elements.common.statusSelectorIntent
+import com.iefjt.android.ui.inventory.elements.common.statusSelectorLauncher
+import com.iefjt.android.ui.inventory.elements.common.typeSelectorIntent
+import com.iefjt.android.ui.inventory.elements.common.typeSelectorLauncher
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,53 +57,30 @@ fun AddElementScreen(
 ) {
     val uiState = viewModel.uiState
     val context = LocalContext.current
+
     val brandSelectorLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    val brandId = it.getStringExtra("brandId")!!
-                    viewModel.onBrandSelect(brandId)
-                }
-            }
-        }
-
-    val brandSelectorIntent = Intent(context, BrandSelectorActivity::class.java)
-
-    val typeSelectorLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    val typeId = it.getStringExtra("typeId")!!
-                    viewModel.onTypeSelect(typeId)
-                }
-            }
-        }
-
-    val typeSelectorIntent = Intent(context, TypeSelectorActivity::class.java)
+        brandSelectorLauncher(
+            onSelect = { viewModel.onBrandSelect(it) },
+            onCancel = {}
+        )
 
     val headquartersSelectorLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    val headquartersId = it.getStringExtra("headquartersId")!!
-                    viewModel.onHeadquartersSelect(headquartersId)
-                }
-            }
-        }
+        headquartersSelectorLauncher(
+            onSelect = { viewModel.onHeadquartersSelect(it) },
+            onCancel = {}
+        )
 
-    val headquartersSelectorIntent = Intent(context, HeadquartersSelectorActivity::class.java)
+    val typeSelectorLauncher =
+        typeSelectorLauncher(
+            onSelect = { viewModel.onTypeSelect(it) },
+            onCancel = {}
+        )
 
     val statusSelectorLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    val statusId = it.getStringExtra("statusId")!!
-                    viewModel.onStatusSelect(statusId)
-                }
-            }
-        }
-
-    val statusSelectorIntent = Intent(context, StatusSelectorActivity::class.java)
+        statusSelectorLauncher(
+            onSelect = { viewModel.onStatusSelect(it) },
+            onCancel = {}
+        )
 
     LaunchedEffect(key1 = uiState.successful) {
         if (uiState.successful) {
@@ -182,7 +161,7 @@ fun AddElementScreen(
 
                 OutlinedCard(
                     onClick = {
-                        headquartersSelectorLauncher.launch(headquartersSelectorIntent)
+                        headquartersSelectorLauncher.launch(headquartersSelectorIntent(context))
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -226,12 +205,12 @@ fun AddElementScreen(
 
                             OutlinedCard(
                                 onClick = {
-                                    brandSelectorLauncher.launch(brandSelectorIntent)
+                                    brandSelectorLauncher.launch(brandSelectorIntent(context))
                                 },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 if (uiState.brand != null) {
-                                    ElementBrandCard(brand = uiState.brand)
+                                    BrandCard(brand = uiState.brand)
                                 } else {
                                     EmptySelectionCard()
                                 }
@@ -249,11 +228,11 @@ fun AddElementScreen(
                             Spacer(modifier = Modifier.height(5.dp))
 
                             OutlinedCard(
-                                onClick = { typeSelectorLauncher.launch(typeSelectorIntent) },
+                                onClick = { typeSelectorLauncher.launch(typeSelectorIntent(context)) },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 if (uiState.type != null) {
-                                    ElementTypeCard(type = uiState.type)
+                                    ElementType(type = uiState.type)
                                 } else {
                                     EmptySelectionCard()
                                 }
@@ -271,11 +250,11 @@ fun AddElementScreen(
                             Spacer(modifier = Modifier.height(5.dp))
 
                             OutlinedCard(
-                                onClick = { statusSelectorLauncher.launch(statusSelectorIntent) },
+                                onClick = { statusSelectorLauncher.launch(statusSelectorIntent(context)) },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 if (uiState.status != null) {
-                                    ElementStatusCard(status = uiState.status)
+                                    ElementStatus(status = uiState.status)
                                 } else {
                                     EmptySelectionCard()
                                 }

@@ -10,12 +10,16 @@ import javax.inject.Inject
 class ElementsRepository @Inject constructor(private val remoteDataSource: ElementsRemoteDataSource) {
     val allElements = remoteDataSource.getAll().map { it.map { model -> model.toDomain() } }
 
-    fun getById(elementId: String) = remoteDataSource.getById(elementId).map { model -> model!!.toDomain() }
+    suspend fun getById(elementId: String): Element {
+        return remoteDataSource.getById(elementId).toDomain()
+    }
 
     suspend fun add(element: Element) {
         val model = element.toModel()
         remoteDataSource.add(model)
     }
 
-    suspend fun delete(elementId: String) = remoteDataSource.delete(elementId)
+    suspend fun delete(elementId: String) {
+        remoteDataSource.delete(elementId)
+    }
 }

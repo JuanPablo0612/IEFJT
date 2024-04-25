@@ -10,12 +10,16 @@ import javax.inject.Inject
 class TypesRepository @Inject constructor(private val remoteDataSource: TypesRemoteDataSource) {
     val allTypes = remoteDataSource.getAll().map { it.map { model -> model.toDomain() } }
 
-    fun getById(typeId: String) = remoteDataSource.getById(typeId).map { model -> model!!.toDomain() }
+    suspend fun getById(typeId: String): Type {
+        return remoteDataSource.getById(typeId).toDomain()
+    }
 
     suspend fun add(type: Type) {
         val model = type.toModel()
         remoteDataSource.add(model)
     }
 
-    suspend fun delete(typeId: String) = remoteDataSource.delete(typeId)
+    suspend fun delete(typeId: String) {
+        remoteDataSource.delete(typeId)
+    }
 }

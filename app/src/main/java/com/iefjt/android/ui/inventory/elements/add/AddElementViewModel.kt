@@ -16,7 +16,6 @@ import com.iefjt.android.domain.usecase.headquarters.GetHeadquartersByIdUseCase
 import com.iefjt.android.domain.usecase.statuses.GetStatusByIdUseCase
 import com.iefjt.android.domain.usecase.types.GetTypeByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -71,60 +70,56 @@ class AddElementViewModel @Inject constructor(
 
     private fun getType() {
         viewModelScope.launch {
-            getTypeByIdUseCase(uiState.typeId)
-                .catch { cause ->
-                    uiState = uiState.copy(errorMessageId = (cause as Exception).getMessageId())
-                }
-                .collect { type ->
-                    uiState = uiState.copy(type = type)
-                }
+            uiState = try {
+                val type = getTypeByIdUseCase(uiState.typeId)
+                uiState.copy(type = type)
+            } catch (e: Exception) {
+                uiState.copy(errorMessageId = e.getMessageId())
+            }
         }
     }
 
     private fun getBrand() {
         viewModelScope.launch {
-            getBrandByIdUseCase(uiState.brandId)
-                .catch { cause ->
-                    uiState = uiState.copy(errorMessageId = (cause as Exception).getMessageId())
-                }
-                .collect { brand ->
-                    uiState = uiState.copy(brand = brand)
-                }
+            uiState = try {
+                val brand = getBrandByIdUseCase(uiState.brandId)
+                uiState.copy(brand = brand)
+            } catch (e: Exception) {
+                uiState.copy(errorMessageId = e.getMessageId())
+            }
         }
     }
 
     private fun getStatus() {
         viewModelScope.launch {
-            getStatusByIdUseCase(uiState.statusId)
-                .catch { cause ->
-                    uiState = uiState.copy(errorMessageId = (cause as Exception).getMessageId())
-                }
-                .collect { status ->
-                    uiState = uiState.copy(status = status)
-                }
+            uiState = try {
+                val status = getStatusByIdUseCase(uiState.statusId)
+                uiState.copy(status = status)
+            } catch (e: Exception) {
+                uiState.copy(errorMessageId = e.getMessageId())
+            }
         }
     }
 
     private fun getHeadquarters() {
         viewModelScope.launch {
-            getHeadquartersByIdUseCase(uiState.headquartersId)
-                .catch { cause ->
-                    uiState = uiState.copy(errorMessageId = (cause as Exception).getMessageId())
-                }
-                .collect { headquarters ->
-                    uiState = uiState.copy(headquarters = headquarters)
-                }
+            uiState = try {
+                val headquarters = getHeadquartersByIdUseCase(uiState.headquartersId)
+                uiState.copy(headquarters = headquarters)
+            } catch (e: Exception) {
+                uiState.copy(errorMessageId = e.getMessageId())
+            }
         }
     }
 
     fun addElement() {
         viewModelScope.launch {
             with(uiState) {
-                try {
+                uiState = try {
                     addElementUseCase(name, typeId, brandId, serial, statusId, headquartersId, observations)
-                    uiState = uiState.copy(successful = true)
+                    uiState.copy(successful = true)
                 } catch (e: Exception) {
-                    uiState = uiState.copy(errorMessageId = e.getMessageId())
+                    uiState.copy(errorMessageId = e.getMessageId())
                 }
             }
         }

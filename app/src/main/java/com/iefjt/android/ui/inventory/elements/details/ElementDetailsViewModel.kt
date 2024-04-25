@@ -10,7 +10,6 @@ import com.iefjt.android.domain.model.ElementWithAllData
 import com.iefjt.android.domain.usecase.elements.DeleteElementUseCase
 import com.iefjt.android.domain.usecase.elements.GetElementByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,23 +28,22 @@ class ElementDetailsViewModel @Inject constructor(
 
     private fun getElementById(elementId: String) {
         viewModelScope.launch {
-            getElementByIdUseCase(elementId)
-                .catch { cause ->
-                    uiState = uiState.copy(errorMessageId = (cause as Exception).getMessageId())
-                }
-                .collect { element ->
-                    uiState = uiState.copy(element = element)
-                }
+            uiState = try {
+                val element = getElementByIdUseCase(elementId)
+                uiState.copy(loading = false, element = element)
+            } catch (e :Exception) {
+                uiState.copy(errorMessageId = e.getMessageId(), loading = false)
+            }
         }
     }
 
     fun deleteElement() {
         viewModelScope.launch {
-            try {
+            uiState = try {
                 deleteElementUseCase(uiState.element!!.id)
-                uiState = uiState.copy(deleted = true)
+                uiState.copy(deleted = true)
             } catch (e: Exception) {
-                uiState = uiState.copy(errorMessageId = e.getMessageId())
+                uiState.copy(errorMessageId = e.getMessageId())
             }
         }
     }
@@ -53,6 +51,7 @@ class ElementDetailsViewModel @Inject constructor(
 
 data class ElementDetailsUiState(
     val errorMessageId: Int? = null,
+    val loading: Boolean = true,
     val deleted: Boolean = false,
     val element: ElementWithAllData? = null
 )

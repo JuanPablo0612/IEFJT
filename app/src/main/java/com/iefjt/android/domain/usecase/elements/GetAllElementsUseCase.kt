@@ -8,6 +8,7 @@ import com.iefjt.android.domain.usecase.statuses.GetStatusByIdUseCase
 import com.iefjt.android.domain.usecase.types.GetTypeByIdUseCase
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetAllElementsUseCase @Inject constructor(
@@ -17,39 +18,25 @@ class GetAllElementsUseCase @Inject constructor(
     private val getStatusByIdUseCase: GetStatusByIdUseCase,
     private val getTypeByIdUseCase: GetTypeByIdUseCase
 ) {
-    operator fun invoke() = callbackFlow {
-        val elementsWithAllData = mutableListOf<ElementWithAllData>()
+    operator fun invoke() = elementsRepository.allElements.map { elements ->
+        elements.map { element ->
+            val brand = getBrandByIdUseCase(element.brandId)
+            val headquarters = getHeadquartersByIdUseCase(element.headquartersId)
+            val status = getStatusByIdUseCase(element.statusId)
+            val type = getTypeByIdUseCase(element.typeId)
 
-        elementsRepository.allElements.collect { elements ->
-            elements.forEach { element ->
-                combine(
-                    getBrandByIdUseCase(element.brandId),
-                    getHeadquartersByIdUseCase(element.headquartersId),
-                    getStatusByIdUseCase(element.statusId),
-                    getTypeByIdUseCase(element.typeId)
-                ) { brand, headquarters, status, type ->
-                    ElementWithAllData(
-                        id = element.id,
-                        name = element.name,
-                        type = type,
-                        brand = brand,
-                        serial = element.serial,
-                        status = status,
-                        headquarters = headquarters,
-                        observations = element.observations
-                    )
-                }.collect { elementWithAllData ->
-                    if (elementsWithAllData.any { it.id == elementWithAllData.id }) {
-                        val index =
-                            elementsWithAllData.indexOfFirst { it.id == elementWithAllData.id }
-                        elementsWithAllData[index] = elementWithAllData
-                    } else {
-                        elementsWithAllData.add(elementWithAllData)
-                    }
+            val elementWithAllData = ElementWithAllData(
+                id = element.id,
+                name = element.name,
+                type = type,
+                brand = brand,
+                serial = element.serial,
+                status = status,
+                headquarters = headquarters,
+                observations = element.observations
+            )
 
-                    trySend(elementsWithAllData.toList())
-                }
-            }
+            elementWithAllData
         }
     }
 }
