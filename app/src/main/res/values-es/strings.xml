@@ -29,7 +29,6 @@
     <string name="element_details_title">Detalles del elemento</string>
 
     <string name="element_add_title">Agregar elemento:</string>
-    <string name="element_add_select">Seleccionar:</string>
     <string name="element_add_amount">Cantidad:</string>
     <string name="element_add_save">Guardar</string>
 
@@ -44,6 +43,8 @@
 
     zz<string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="select">Seleccionar</string>
     <string name="network_error">Error de red. Inténtelo de nuevo más tarde.</string>
     <string name="unknown_error">Error desconocido.</string>
 </resources>

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.ScaffoldContent
+import com.iefjt.android.ui.inventory.common.TypeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,6 +63,7 @@ fun TypesScreen(
                 items(uiState.types, key = { it.id }) { type ->
                     TypeCard(
                         type = type,
+                        allowActions = true,
                         onClick = {
                             onSelect(type.id)
                         },

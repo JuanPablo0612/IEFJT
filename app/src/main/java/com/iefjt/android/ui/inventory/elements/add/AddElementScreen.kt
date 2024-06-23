@@ -1,7 +1,6 @@
 package com.iefjt.android.ui.inventory.elements.add
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,10 +34,10 @@ import androidx.navigation.NavController
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.ScaffoldContent
 import com.iefjt.android.ui.inventory.common.BrandCard
-import com.iefjt.android.ui.inventory.elements.common.ElementBrand
-import com.iefjt.android.ui.inventory.elements.common.ElementStatus
-import com.iefjt.android.ui.inventory.elements.common.ElementType
-import com.iefjt.android.ui.inventory.elements.common.EmptySelectionCard
+import com.iefjt.android.ui.inventory.common.HeadquartersCard
+import com.iefjt.android.ui.inventory.common.SelectCard
+import com.iefjt.android.ui.inventory.common.StatusCard
+import com.iefjt.android.ui.inventory.common.TypeCard
 import com.iefjt.android.ui.inventory.elements.common.brandSelectorIntent
 import com.iefjt.android.ui.inventory.elements.common.brandSelectorLauncher
 import com.iefjt.android.ui.inventory.elements.common.headquartersSelectorIntent
@@ -109,13 +107,6 @@ fun AddElementScreen(
                     .fillMaxSize()
                     .padding(10.dp)
             ) {
-                Text(
-                    text = stringResource(id = R.string.element_name),
-                    style = MaterialTheme.typography.labelLarge
-                )
-
-                Spacer(modifier = Modifier.height(5.dp))
-
                 OutlinedTextField(
                     value = uiState.name,
                     onValueChange = { viewModel.onNameChange(it) },
@@ -130,13 +121,6 @@ fun AddElementScreen(
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = stringResource(id = R.string.element_serial),
-                    style = MaterialTheme.typography.labelLarge
-                )
-
-                Spacer(modifier = Modifier.height(5.dp))
 
                 OutlinedTextField(
                     value = uiState.serial,
@@ -157,39 +141,48 @@ fun AddElementScreen(
                     style = MaterialTheme.typography.labelLarge
                 )
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-                OutlinedCard(
-                    onClick = {
-                        headquartersSelectorLauncher.launch(headquartersSelectorIntent(context))
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                    ) {
-                        if (uiState.headquarters != null) {
-                            Text(
-                                text = uiState.headquarters.name,
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                        } else {
-                            Text(
-                                text = stringResource(id = R.string.element_add_select),
-                                style = MaterialTheme.typography.titleLarge
-                            )
+                if (uiState.headquarters != null) {
+                    HeadquartersCard(
+                        headquarters = uiState.headquarters,
+                        onClick = {
+                            headquartersSelectorLauncher.launch(headquartersSelectorIntent(context))
                         }
-                    }
+                    )
+                } else {
+                    SelectCard(onClick = {
+                        headquartersSelectorLauncher.launch(headquartersSelectorIntent(context))
+                    })
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = stringResource(id = R.string.element_status),
+                    style = MaterialTheme.typography.labelLarge
+                )
+
+                if (uiState.status != null) {
+                    StatusCard(
+                        status = uiState.status,
+                        onClick = {
+                            statusSelectorLauncher.launch(
+                                statusSelectorIntent(context)
+                            )
+                        })
+                } else {
+                    SelectCard(onClick = {
+                        statusSelectorLauncher.launch(
+                            statusSelectorIntent(context)
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
@@ -201,19 +194,18 @@ fun AddElementScreen(
                                 style = MaterialTheme.typography.labelLarge
                             )
 
-                            Spacer(modifier = Modifier.height(5.dp))
-
-                            OutlinedCard(
-                                onClick = {
+                            if (uiState.brand != null) {
+                                BrandCard(
+                                    brand = uiState.brand,
+                                    onClick = {
+                                        brandSelectorLauncher.launch(
+                                            brandSelectorIntent(context)
+                                        )
+                                    })
+                            } else {
+                                SelectCard(onClick = {
                                     brandSelectorLauncher.launch(brandSelectorIntent(context))
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                if (uiState.brand != null) {
-                                    BrandCard(brand = uiState.brand)
-                                } else {
-                                    EmptySelectionCard()
-                                }
+                                })
                             }
                         }
                     }
@@ -225,39 +217,18 @@ fun AddElementScreen(
                                 style = MaterialTheme.typography.labelLarge
                             )
 
-                            Spacer(modifier = Modifier.height(5.dp))
-
-                            OutlinedCard(
-                                onClick = { typeSelectorLauncher.launch(typeSelectorIntent(context)) },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                if (uiState.type != null) {
-                                    ElementType(type = uiState.type)
-                                } else {
-                                    EmptySelectionCard()
-                                }
-                            }
-                        }
-                    }
-
-                    item {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = stringResource(id = R.string.element_status),
-                                style = MaterialTheme.typography.labelLarge
-                            )
-
-                            Spacer(modifier = Modifier.height(5.dp))
-
-                            OutlinedCard(
-                                onClick = { statusSelectorLauncher.launch(statusSelectorIntent(context)) },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                if (uiState.status != null) {
-                                    ElementStatus(status = uiState.status)
-                                } else {
-                                    EmptySelectionCard()
-                                }
+                            if (uiState.type != null) {
+                                TypeCard(
+                                    type = uiState.type,
+                                    onClick = {
+                                        typeSelectorLauncher.launch(
+                                            typeSelectorIntent(context)
+                                        )
+                                    })
+                            } else {
+                                SelectCard(onClick = {
+                                    typeSelectorLauncher.launch(typeSelectorIntent(context))
+                                })
                             }
                         }
                     }

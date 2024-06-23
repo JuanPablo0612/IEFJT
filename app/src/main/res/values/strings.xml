@@ -30,7 +30,6 @@
     <string name="element_details_title">Element details</string>
 
     <string name="element_add_title">Add element:</string>
-    <string name="element_add_select">Select:</string>
     <string name="element_add_amount">Amount:</string>
     <string name="element_add_save">Save</string>
 
@@ -45,6 +44,8 @@
 
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="select">Select</string>
     <string name="network_error">Network error. Try again later.</string>
     <string name="unknown_error">Unknown error.</string>
 </resources>

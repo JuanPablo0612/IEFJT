@@ -2,9 +2,8 @@ package com.iefjt.android.ui.inventory.statuses
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.ScaffoldContent
+import com.iefjt.android.ui.inventory.common.StatusCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,15 +53,14 @@ fun StatusesScreen(
         }
     ) { padding ->
         ScaffoldContent(padding = padding) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(10.dp)
             ) {
                 items(uiState.statuses, key = { it.id }) { status ->
                     StatusCard(
                         status = status,
+                        allowActions = true,
                         onClick = { onSelect(status.id) },
                         onDelete = { viewModel.deleteStatus(status.id) }
                     )

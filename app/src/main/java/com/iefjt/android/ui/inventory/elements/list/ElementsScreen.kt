@@ -12,10 +12,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,12 +26,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.CircularLoading
-import com.iefjt.android.ui.common.buttons.ScaffoldAddButton
 import com.iefjt.android.ui.common.ScaffoldContent
-import com.iefjt.android.ui.inventory.elements.common.EmptySelectionCard
-import com.iefjt.android.ui.inventory.elements.common.ElementBrand
-import com.iefjt.android.ui.inventory.elements.common.ElementStatus
-import com.iefjt.android.ui.inventory.elements.common.ElementType
+import com.iefjt.android.ui.common.buttons.ScaffoldAddButton
+import com.iefjt.android.ui.inventory.common.BrandCard
+import com.iefjt.android.ui.inventory.common.ElementCard
+import com.iefjt.android.ui.inventory.common.HeadquartersCard
+import com.iefjt.android.ui.inventory.common.SelectCard
+import com.iefjt.android.ui.inventory.common.StatusCard
+import com.iefjt.android.ui.inventory.common.TypeCard
 import com.iefjt.android.ui.inventory.elements.common.brandSelectorIntent
 import com.iefjt.android.ui.inventory.elements.common.brandSelectorLauncher
 import com.iefjt.android.ui.inventory.elements.common.headquartersSelectorIntent
@@ -44,7 +44,6 @@ import com.iefjt.android.ui.inventory.elements.common.typeSelectorIntent
 import com.iefjt.android.ui.inventory.elements.common.typeSelectorLauncher
 import com.iefjt.android.ui.navigation.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController: NavController) {
     val uiState = viewModel.uiState
@@ -111,33 +110,21 @@ fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController
                                 style = MaterialTheme.typography.labelLarge
                             )
 
-                            OutlinedCard(
-                                onClick = {
-                                    headquartersSelectorLauncher.launch(
-                                        headquartersSelectorIntent(
-                                            context
-                                        )
-                                    )
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(10.dp)
-                                ) {
-                                    if (uiState.headquarters != null) {
-                                        Text(
-                                            text = uiState.headquarters.name,
-                                            style = MaterialTheme.typography.titleLarge
-                                        )
-                                    } else {
-                                        Text(
-                                            text = stringResource(id = R.string.element_add_select),
-                                            style = MaterialTheme.typography.titleLarge
+                            if (uiState.headquarters != null) {
+                                HeadquartersCard(
+                                    headquarters = uiState.headquarters,
+                                    onClick = {
+                                        headquartersSelectorLauncher.launch(
+                                            headquartersSelectorIntent(context)
                                         )
                                     }
-                                }
+                                )
+                            } else {
+                                SelectCard(onClick = {
+                                    headquartersSelectorLauncher.launch(
+                                        headquartersSelectorIntent(context)
+                                    )
+                                })
                             }
                         }
 
@@ -155,23 +142,21 @@ fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController
                                             style = MaterialTheme.typography.labelLarge
                                         )
 
-                                        Spacer(modifier = Modifier.height(5.dp))
-
-                                        OutlinedCard(
-                                            onClick = {
-                                                brandSelectorLauncher.launch(
-                                                    brandSelectorIntent(
-                                                        context
+                                        if (uiState.brand != null) {
+                                            BrandCard(
+                                                brand = uiState.brand,
+                                                onClick = {
+                                                    brandSelectorLauncher.launch(
+                                                        brandSelectorIntent(context)
                                                     )
+                                                }
+                                            )
+                                        } else {
+                                            SelectCard(onClick = {
+                                                brandSelectorLauncher.launch(
+                                                    brandSelectorIntent(context)
                                                 )
-                                            },
-                                            modifier = Modifier.fillMaxWidth()
-                                        ) {
-                                            if (uiState.brand != null) {
-                                                ElementBrand(brand = uiState.brand)
-                                            } else {
-                                                EmptySelectionCard()
-                                            }
+                                            })
                                         }
                                     }
                                 }
@@ -185,21 +170,21 @@ fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController
                                             style = MaterialTheme.typography.labelLarge
                                         )
 
-                                        Spacer(modifier = Modifier.height(5.dp))
-
-                                        OutlinedCard(
-                                            onClick = {
+                                        if (uiState.type != null) {
+                                            TypeCard(
+                                                type = uiState.type,
+                                                onClick = {
+                                                    typeSelectorLauncher.launch(
+                                                        typeSelectorIntent(context)
+                                                    )
+                                                }
+                                            )
+                                        } else {
+                                            SelectCard(onClick = {
                                                 typeSelectorLauncher.launch(
                                                     typeSelectorIntent(context)
                                                 )
-                                            },
-                                            modifier = Modifier.fillMaxWidth()
-                                        ) {
-                                            if (uiState.type != null) {
-                                                ElementType(type = uiState.type)
-                                            } else {
-                                                EmptySelectionCard()
-                                            }
+                                            })
                                         }
                                     }
                                 }
@@ -213,28 +198,26 @@ fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController
                                             style = MaterialTheme.typography.labelLarge
                                         )
 
-                                        Spacer(modifier = Modifier.height(5.dp))
-
-                                        OutlinedCard(
-                                            onClick = {
+                                        if (uiState.status != null) {
+                                            StatusCard(status = uiState.status, onClick = {
                                                 statusSelectorLauncher.launch(
                                                     statusSelectorIntent(context)
                                                 )
-                                            },
-                                            modifier = Modifier.fillMaxWidth()
-                                        ) {
-                                            if (uiState.status != null) {
-                                                ElementStatus(status = uiState.status)
-                                            } else {
-                                                EmptySelectionCard()
-                                            }
+                                            })
+                                        } else {
+                                            SelectCard(onClick = {
+                                                statusSelectorLauncher.launch(
+                                                    statusSelectorIntent(context)
+                                                )
+                                            })
                                         }
                                     }
                                 }
                             }
                         }
 
-                        val isFiltered = uiState.brandFilterVisible || uiState.headquartersFilterVisible || uiState.statusFilterVisible || uiState.typeFilterVisible
+                        val isFiltered =
+                            uiState.brandFilterVisible || uiState.headquartersFilterVisible || uiState.statusFilterVisible || uiState.typeFilterVisible
                         val filteredElements = uiState.elements
                             .filter { element ->
                                 (uiState.brandFilterVisible && element.brand.id == uiState.brand?.id) ||
@@ -249,7 +232,9 @@ fun ElementsScreen(viewModel: ElementsViewModel = hiltViewModel(), navController
                                 .fillMaxSize()
                                 .padding(10.dp)
                         ) {
-                            items(if (isFiltered) filteredElements else uiState.elements, key = { it.id }) { element ->
+                            items(
+                                if (isFiltered) filteredElements else uiState.elements,
+                                key = { it.id }) { element ->
                                 ElementCard(
                                     element = element,
                                     onClick = {

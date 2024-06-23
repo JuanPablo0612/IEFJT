@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.ScaffoldContent
+import com.iefjt.android.ui.inventory.common.HeadquartersCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +60,7 @@ fun HeadquartersScreen(
                 items(uiState.headquarters, key = { it.id }) { headquarters ->
                     HeadquartersCard(
                         headquarters = headquarters,
+                        allowActions = true,
                         onClick = {
                             onSelect(headquarters.id)
                         },

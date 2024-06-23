@@ -30,9 +30,10 @@ import androidx.navigation.NavController
 import com.iefjt.android.R
 import com.iefjt.android.ui.common.CircularLoading
 import com.iefjt.android.ui.common.ScaffoldContent
-import com.iefjt.android.ui.inventory.elements.common.ElementBrand
-import com.iefjt.android.ui.inventory.elements.common.ElementStatus
-import com.iefjt.android.ui.inventory.elements.common.ElementType
+import com.iefjt.android.ui.inventory.common.BrandCard
+import com.iefjt.android.ui.inventory.common.HeadquartersCard
+import com.iefjt.android.ui.inventory.common.StatusCard
+import com.iefjt.android.ui.inventory.common.TypeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,8 +87,6 @@ fun ElementDetailsScreen(
                             style = MaterialTheme.typography.labelLarge
                         )
 
-                        Spacer(modifier = Modifier.height(5.dp))
-
                         Text(
                             text = uiState.element.name,
                             style = MaterialTheme.typography.titleLarge
@@ -99,8 +98,6 @@ fun ElementDetailsScreen(
                             text = stringResource(id = R.string.element_serial),
                             style = MaterialTheme.typography.labelLarge
                         )
-
-                        Spacer(modifier = Modifier.height(5.dp))
 
                         Text(
                             text = uiState.element.serial,
@@ -114,12 +111,16 @@ fun ElementDetailsScreen(
                             style = MaterialTheme.typography.labelLarge
                         )
 
-                        Spacer(modifier = Modifier.height(5.dp))
+                        HeadquartersCard(headquarters = uiState.element.headquarters)
+
+                        Spacer(modifier = Modifier.height(10.dp))
 
                         Text(
-                            text = uiState.element.headquarters.name,
-                            style = MaterialTheme.typography.titleLarge
+                            text = stringResource(id = R.string.element_status),
+                            style = MaterialTheme.typography.labelLarge
                         )
+
+                        StatusCard(status = uiState.element.status)
 
                         Spacer(modifier = Modifier.height(10.dp))
 
@@ -136,9 +137,7 @@ fun ElementDetailsScreen(
                                         style = MaterialTheme.typography.labelLarge
                                     )
 
-                                    Spacer(modifier = Modifier.height(5.dp))
-
-                                    ElementBrand(brand = uiState.element.brand)
+                                    BrandCard(brand = uiState.element.brand)
                                 }
                             }
 
@@ -149,22 +148,7 @@ fun ElementDetailsScreen(
                                         style = MaterialTheme.typography.labelLarge
                                     )
 
-                                    Spacer(modifier = Modifier.height(5.dp))
-
-                                    ElementType(type = uiState.element.type)
-                                }
-                            }
-
-                            item {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text(
-                                        text = stringResource(id = R.string.element_status),
-                                        style = MaterialTheme.typography.labelLarge
-                                    )
-
-                                    Spacer(modifier = Modifier.height(5.dp))
-
-                                    ElementStatus(status = uiState.element.status)
+                                    TypeCard(type = uiState.element.type)
                                 }
                             }
                         }
