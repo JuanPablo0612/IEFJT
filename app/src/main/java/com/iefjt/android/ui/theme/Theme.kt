@@ -16,32 +16,74 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = LightGreen,
+    onPrimary = DarkGray,
+    primaryContainer = Blue,
+    onPrimaryContainer = DarkGray,
+    inversePrimary = MediumGreen,
+    secondary = Red,
+    onSecondary = DarkGray,
+    secondaryContainer = DarkGreen,
+    onSecondaryContainer = DarkGray,
+    tertiary = DarkGray,
+    onTertiary = LightGreen,
+    tertiaryContainer = Blue,
+    onTertiaryContainer = LightGreen,
+    background = DarkGray,
+    onBackground = White,
+    surface = DarkGray,
+    onSurface = LightGreen,
+    surfaceVariant = DarkGreen,
+    onSurfaceVariant = LightGreen,
+    surfaceTint = MediumGreen,
+    inverseSurface = White,
+    inverseOnSurface = DarkGray,
+    error = Red,
+    onError = DarkGray,
+    errorContainer = Red,
+    onErrorContainer = DarkGray,
+    outline = Blue,
+    outlineVariant = DarkGreen,
+    scrim = DarkGreen
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = Blue,
+    onPrimary = White,
+    primaryContainer = MediumGreen,
+    onPrimaryContainer = White,
+    inversePrimary = DarkGreen,
+    secondary = Red,
+    onSecondary = White,
+    secondaryContainer = LightGreen,
+    onSecondaryContainer = White,
+    tertiary = DarkGray,
+    onTertiary = White,
+    tertiaryContainer = MediumGreen,
+    onTertiaryContainer = White,
+    background = White,
+    onBackground = DarkGray,
+    surface = White,
+    onSurface = DarkGray,
+    surfaceVariant = LightGreen,
+    onSurfaceVariant = White,
+    surfaceTint = MediumGreen,
+    inverseSurface = DarkGray,
+    inverseOnSurface = White,
+    error = Red,
+    onError = White,
+    errorContainer = Red,
+    onErrorContainer = White,
+    outline = Blue,
+    outlineVariant = DarkGreen,
+    scrim = DarkGray
 )
 
 @Composable
 fun IEFJTTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

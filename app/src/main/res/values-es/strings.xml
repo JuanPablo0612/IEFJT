@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="access_title">Ingresa a tu cuenta o crea una</string>
+    <string name="sign_in">Iniciar sesión</string>
+    <string name="sign_up">Crear cuenta</string>
+    <string name="email">Correo electrónico</string>
+    <string name="invalid_email">Por favor ingrese una irección de correo electrónico válida.</string>
+    <string name="password">Contraseña</string>
+    <string name="invalid_password">La longitud de la contraseña debe estar entre 8 y 16 caracteres.</string>
+
     <string name="brands_title">Marcas</string>
     <string name="brands_add_brand">Agregar marca</string>
     <string name="brands_add_name">Nombre de la marca:</string>
@@ -20,26 +28,29 @@
     <string name="types_add_image_url">URL de la imagen de el tipo:</string>
 
     <string name="element_name">Nombre:</string>
+    <string name="element_observations">Observaciones:</string>
     <string name="element_headquarters">Sede:</string>
     <string name="element_serial">Serial:</string>
     <string name="element_brand">Marca:</string>
     <string name="element_status">Estado:</string>
     <string name="element_type">Tipo:</string>
+    <string name="element_edit">Editar</string>
+    <string name="element_delete">Eliminar</string>
 
-    <string name="element_details_title">Detalles del elemento</string>
+    <string name="element_details">Detalles del elemento</string>
 
     <string name="element_add_title">Agregar elemento:</string>
     <string name="element_add_amount">Cantidad:</string>
     <string name="element_add_save">Guardar</string>
 
-    <string name="elements_title">Elementos del inventario</string>
-    <string name="elements_empty">El inventario está vacío.</string>
-    <string name="elements_filter">Filtrar por:</string>
-    <string name="elements_filter_all">Filtrar por todos</string>
-    <string name="elements_filter_brand">Filtrar por marca</string>
-    <string name="elements_filter_type">Filtrar por tipo</string>
-    <string name="elements_filter_headquarters">Filtrar por sede</string>
-    <string name="elements_filter_status">Filtrar por:</string>
+    <string name="inventory_items">Elementos del inventario</string>
+    <string name="empty_inventory">El inventario está vacío.</string>
+
+    <string name="role_admin">Administrador</string>
+    <string name="role_editor">Editor</string>
+    <string name="role_user">Usuario</string>
+
+    <string name="users">Usuarios</string>
 
     zz<string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>

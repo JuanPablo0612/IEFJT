@@ -7,23 +7,23 @@ import javax.inject.Inject
 class AddElementUseCase @Inject constructor(private val elementsRepository: ElementsRepository) {
     suspend operator fun invoke(
         name: String,
-        typeId: String,
-        brandId: String,
+        type: String,
+        brand: String,
         serial: String,
-        statusId: String,
-        headquartersId: String,
+        status: String,
+        headquarters: String,
         observations: String
-    ) {
+    ): Result<Nothing?> {
         val element = Element(
             name = name,
-            typeId = typeId,
-            brandId = brandId,
+            type = type,
+            brand = brand,
             serial = serial,
-            statusId = statusId,
-            headquartersId = headquartersId,
+            status = status,
+            headquarters = headquarters,
             observations = observations
         )
 
-        elementsRepository.add(element)
+        return elementsRepository.add(element)
     }
 }

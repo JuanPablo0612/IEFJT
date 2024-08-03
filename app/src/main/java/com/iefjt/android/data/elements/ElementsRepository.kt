@@ -8,18 +8,20 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ElementsRepository @Inject constructor(private val remoteDataSource: ElementsRemoteDataSource) {
-    val allElements = remoteDataSource.getAll().map { it.map { model -> model.toDomain() } }
+    fun getAll() = remoteDataSource.getAll().map { elements -> elements.map { it.toDomain() } }
 
-    suspend fun getById(elementId: String): Element {
-        return remoteDataSource.getById(elementId).toDomain()
-    }
+    suspend fun getById(elementId: String) =
+        remoteDataSource.getById(elementId).map { it.toDomain() }
 
-    suspend fun add(element: Element) {
+    fun getByType(typeId: String) =
+        remoteDataSource.getByType(typeId).map { elements -> elements.map { it.toDomain() } }
+
+    suspend fun add(element: Element): Result<Nothing?> {
         val model = element.toModel()
-        remoteDataSource.add(model)
+        return remoteDataSource.add(model)
     }
 
-    suspend fun delete(elementId: String) {
-        remoteDataSource.delete(elementId)
+    suspend fun delete(elementId: String): Result<Nothing?> {
+        return remoteDataSource.delete(elementId)
     }
 }

@@ -23,26 +23,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.inventory.brands.BrandSelectorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.IEFJT" />
-
-        <activity
-            android:name=".ui.inventory.headquarters.HeadquartersSelectorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.IEFJT" />
-
-        <activity
-            android:name=".ui.inventory.statuses.StatusSelectorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.IEFJT" />
-
-        <activity
-            android:name=".ui.inventory.type.TypeSelectorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.IEFJT" />
     </application>
-
 </manifest>
